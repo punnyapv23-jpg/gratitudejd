@@ -5,63 +5,94 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>4 Years of Excellence</title>
 
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 
 <style>
+
 body {
     margin: 0;
     padding: 0;
-    background-color: #EF785B;
     font-family: 'Playfair Display', serif;
+    background: linear-gradient(135deg, #EF785B, #F48F75);
     color: white;
     text-align: center;
     overflow-x: hidden;
 }
 
+/* Elegant Glass Card */
 .container {
-    padding: 40px 20px;
+    margin: 60px auto;
+    padding: 50px 40px;
+    max-width: 750px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 2;
 }
 
 h1 {
-    font-size: 32px;
-    margin-bottom: 10px;
+    font-size: 34px;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
 }
 
 .subtitle {
     font-size: 18px;
-    margin-bottom: 40px;
-    opacity: 0.9;
+    margin-bottom: 35px;
+    opacity: 0.95;
 }
 
+/* Side Images */
+.side-image {
+    position: fixed;
+    bottom: 0;
+    width: 300px;
+    max-width: 25vw;
+    z-index: 1;
+    animation: float 6s ease-in-out infinite;
+}
+
+.left-image { left: 0; }
+.right-image { right: 0; }
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Elegant Envelopes */
 .envelopes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 20px;
-    max-width: 600px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 30px;
 }
 
 .envelope {
-    background: white;
+    background: rgba(255,255,255,0.9);
     color: #EF785B;
-    padding: 20px;
-    border-radius: 12px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 13px;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    font-size: 16px;
+    transition: 0.3s ease;
+    font-weight: 500;
 }
 
 .envelope:hover {
-    transform: scale(1.05);
+    background: white;
+    transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
 .message {
-    margin-top: 30px;
+    margin-top: 20px;
     font-size: 20px;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.7s ease;
 }
 
 .message.show {
@@ -73,29 +104,49 @@ h1 {
     font-size: 22px;
     display: none;
 }
+
+/* Hide doodles on small screens */
+@media (max-width: 950px) {
+    .side-image { display: none; }
+}
+
 </style>
 </head>
 
 <body>
 
+<img src="doodle2.png" class="side-image left-image" alt="Working Together Doodle">
+<img src="doodle1.png" class="side-image right-image" alt="Celebration Doodle">
+
 <div class="container">
-    <h1>Celebrating 4 Remarkable Years</h1>
-    <div class="subtitle">Click each envelope to reveal a note of gratitude</div>
+    <h1>Celebrating 4 Remarkable Years 🎉❤️</h1>
+    <div class="subtitle">Click each envelope to reveal a note of gratitude 💌✨</div>
 
     <div class="envelopes">
-        <div class="envelope" onclick="reveal(1)">Envelope 1</div>
-        <div class="envelope" onclick="reveal(2)">Envelope 2</div>
-        <div class="envelope" onclick="reveal(3)">Envelope 3</div>
-        <div class="envelope" onclick="reveal(4)">Envelope 4</div>
+        <div class="envelope" onclick="reveal(1)">Envelope 1 💖</div>
+        <div class="envelope" onclick="reveal(2)">Envelope 2 🎉</div>
+        <div class="envelope" onclick="reveal(3)">Envelope 3 💐</div>
+        <div class="envelope" onclick="reveal(4)">Envelope 4 🌟</div>
     </div>
 
-    <div id="msg1" class="message">Thank you for being an exceptional problem solver who brings clarity to complexity.</div>
-    <div id="msg2" class="message">Thank you for being a mentor who leads with realism and wisdom.</div>
-    <div id="msg3" class="message">Thank you for supporting every team member with steady leadership.</div>
-    <div id="msg4" class="message">Thank you for being the pillar of strength behind our organization’s growth.</div>
+    <div id="msg1" class="message">
+        Thank you for being an exceptional problem solver who brings clarity to complexity. ❤️
+    </div>
+
+    <div id="msg2" class="message">
+        Thank you for being a mentor who leads with realism and wisdom. 🌷
+    </div>
+
+    <div id="msg3" class="message">
+        Thank you for supporting every team member with steady leadership. 🎊
+    </div>
+
+    <div id="msg4" class="message">
+        Thank you for being the pillar of strength behind our organization’s growth. 🌸
+    </div>
 
     <div id="finalMessage" class="final">
-        ✨ Four years of excellence. Grateful to learn under you every single day. ✨
+        ✨ Four years of excellence. Grateful to learn under you every single day. ✨🎉❤️
     </div>
 </div>
 
@@ -116,7 +167,7 @@ function reveal(num) {
 }
 
 function launchConfetti() {
-    const duration = 2000;
+    const duration = 1800;
     const end = Date.now() + duration;
 
     (function frame() {
