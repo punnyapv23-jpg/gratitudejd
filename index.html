@@ -12,8 +12,6 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    overflow: hidden;
 }
 
 body {
@@ -21,8 +19,9 @@ body {
     font-family: 'Cormorant Garamond', serif;
     color: white;
     text-align: center;
+    overflow-x: hidden;
     opacity: 0;
-    animation: fadeInPage 1.5s ease forwards;
+    animation: fadeInPage 1.3s ease forwards;
     position: relative;
 }
 
@@ -30,21 +29,19 @@ body {
     to { opacity: 1; }
 }
 
-/* MAIN */
+/* MAIN CONTAINER */
 .container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
+    padding: 60px 20px 80px 20px;
+    max-width: 1000px;
+    margin: auto;
     position: relative;
     z-index: 2;
 }
 
 /* HEADING */
 h1 {
-    font-size: 40px;
-    margin-bottom: 8px;
+    font-size: clamp(34px, 6vw, 48px);
+    margin-bottom: 12px;
     background: linear-gradient(90deg, #fff, #FFD700, #fff);
     background-size: 200% auto;
     -webkit-background-clip: text;
@@ -58,48 +55,63 @@ h1 {
 }
 
 .subtitle {
-    font-size: 18px;
-    margin-bottom: 25px;
+    font-size: clamp(16px, 3.5vw, 20px);
+    margin-bottom: 30px;
 }
 
-/* ROUNDED SIDE IMAGES */
+/* DESKTOP SIDE IMAGES */
 .side-image {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    width: 240px;
-    max-width: 22vw;
-    z-index: 1;
+    width: 230px;
     border-radius: 25px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    z-index: 1;
 }
 
 .left-image { left: 15px; }
 .right-image { right: 15px; }
 
-/* ENVELOPES */
-.envelopes {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+/* MOBILE INLINE IMAGES */
+.mobile-image-top,
+.mobile-image-bottom {
+    display: none;
+    margin: 25px auto;
 }
 
+.mobile-image-top img,
+.mobile-image-bottom img {
+    width: 80%;
+    max-width: 320px;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+/* ENVELOPES GRID */
+.envelopes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 22px;
+    max-width: 700px;
+    margin: auto;
+}
+
+/* ENVELOPE */
 .envelope-wrapper {
     perspective: 1000px;
     cursor: pointer;
 }
 
 .envelope {
-    width: 150px;
-    height: 90px;
+    width: 100%;
+    height: 110px;
     background: white;
-    border-radius: 8px;
+    border-radius: 14px;
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.8s ease;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.25);
 }
 
 .envelope.open {
@@ -110,8 +122,8 @@ h1 {
     position: absolute;
     top: 0;
     width: 100%;
-    height: 45px;
-    background: #f9f9f9;
+    height: 55px;
+    background: #f2f2f2;
     clip-path: polygon(0 0, 50% 100%, 100% 0);
     transform-origin: top;
     transition: transform 0.8s ease;
@@ -123,18 +135,18 @@ h1 {
 
 .label {
     position: absolute;
-    bottom: 10px;
+    bottom: 18px;
     width: 100%;
-    font-size: 14px;
+    font-size: 18px;
     color: #EF785B;
 }
 
-/* MESSAGE */
+/* MESSAGES */
 .message {
-    font-size: 18px;
-    margin: 4px 0;
+    margin-top: 18px;
+    font-size: clamp(16px, 4vw, 20px);
     opacity: 0;
-    transition: all 0.6s ease;
+    transition: opacity 0.6s ease;
 }
 
 .message.show {
@@ -142,40 +154,50 @@ h1 {
 }
 
 .final {
-    margin-top: 6px;
-    font-size: 20px;
+    margin-top: 25px;
+    font-size: clamp(18px, 4.5vw, 22px);
     display: none;
 }
 
-/* SPARKLES + FLOATING EMOJIS */
-.sparkle, .floating-emoji {
+/* FLOATING TOP EMOJIS */
+.floating-emoji {
     position: fixed;
-    z-index: 0;
+    font-size: 22px;
+    opacity: 0.18;
+    z-index: 1;
     pointer-events: none;
+    animation: drift 18s linear infinite alternate;
 }
 
+@keyframes drift {
+    0% { transform: translateX(0px); }
+    50% { transform: translateX(20px); }
+    100% { transform: translateX(-20px); }
+}
+
+/* SPARKLES */
 .sparkle {
+    position: fixed;
     width: 4px;
     height: 4px;
     background: white;
     border-radius: 50%;
     opacity: 0.7;
+    z-index: 0;
+    pointer-events: none;
 }
 
-.floating-emoji {
-    font-size: 18px;
-    opacity: 0.08;
-    animation: floatEmoji 12s linear infinite;
-}
+/* RESPONSIVE BEHAVIOR */
+@media (max-width: 900px) {
 
-@keyframes floatEmoji {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-    100% { transform: translateY(0px); }
-}
+    .side-image {
+        display: none;
+    }
 
-@media (max-width: 1000px) {
-    .side-image { display: none; }
+    .mobile-image-top,
+    .mobile-image-bottom {
+        display: block;
+    }
 }
 
 </style>
@@ -183,6 +205,7 @@ h1 {
 
 <body>
 
+<!-- Desktop side images -->
 <img src="doodle2.png" class="side-image left-image">
 <img src="doodle1.png" class="side-image right-image">
 
@@ -190,6 +213,11 @@ h1 {
 
     <h1>Celebrating 4 Remarkable Years 🎉❤️</h1>
     <div class="subtitle">Click each note to reveal a message of gratitude 💌✨</div>
+
+    <!-- Mobile top image -->
+    <div class="mobile-image-top">
+        <img src="doodle2.png">
+    </div>
 
     <div class="envelopes">
 
@@ -236,11 +264,16 @@ h1 {
     </div>
 
     <div id="msg4" class="message">
-        Thank you for being the pillar of strength behind Expedify’s growth. 🌸
+        Thank you for being the pillar of strength behind our organization’s growth. 🌸
     </div>
 
     <div id="finalMessage" class="final">
         ✨ Four years of excellence. Grateful to learn under you every single day. ✨🎉❤️
+    </div>
+
+    <!-- Mobile bottom image -->
+    <div class="mobile-image-bottom">
+        <img src="doodle1.png">
     </div>
 
 </div>
@@ -267,9 +300,9 @@ function openEnvelope(wrapper, num) {
     }
 }
 
-/* GOLD + WHITE CONFETTI */
+/* Confetti */
 function launchConfetti() {
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 20; i++) {
         let confetti = document.createElement("div");
         confetti.className = "sparkle";
         confetti.style.background = Math.random() > 0.5 ? "#FFD700" : "white";
@@ -278,7 +311,7 @@ function launchConfetti() {
         document.body.appendChild(confetti);
 
         let fall = setInterval(() => {
-            confetti.style.top = parseInt(confetti.style.top) + 5 + "px";
+            confetti.style.top = parseInt(confetti.style.top) + 4 + "px";
             if (parseInt(confetti.style.top) > window.innerHeight) {
                 clearInterval(fall);
                 confetti.remove();
@@ -287,7 +320,7 @@ function launchConfetti() {
     }
 }
 
-/* CONTINUOUS WHITE SPARKLES */
+/* Continuous sparkles */
 setInterval(() => {
     let sparkle = document.createElement("div");
     sparkle.className = "sparkle";
@@ -301,17 +334,17 @@ setInterval(() => {
             clearInterval(fall);
             sparkle.remove();
         }
-    }, 20);
-}, 300);
+    }, 400);
+}, 400);
 
-/* SUBTLE FLOATING EMOJIS IN EMPTY AREAS */
-const emojis = ["✨","🎉","💛","🌟"];
-for (let i = 0; i < 8; i++) {
+/* Floating top emojis */
+const topEmojis = ["✨","🎉","💛","🌟","🤍","🥂"];
+for (let i = 0; i < 10; i++) {
     let emoji = document.createElement("div");
     emoji.className = "floating-emoji";
-    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-    emoji.style.left = Math.random() * 90 + "vw";
-    emoji.style.top = Math.random() * 90 + "vh";
+    emoji.innerText = topEmojis[Math.floor(Math.random() * topEmojis.length)];
+    emoji.style.left = Math.random() * 95 + "vw";
+    emoji.style.top = Math.random() * 25 + "vh";
     document.body.appendChild(emoji);
 }
 
@@ -319,4 +352,3 @@ for (let i = 0; i < 8; i++) {
 
 </body>
 </html>
-
