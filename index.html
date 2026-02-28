@@ -9,36 +9,42 @@
 
 <style>
 
-body {
+html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
     background: linear-gradient(135deg, #EF785B, #F48F75);
     font-family: 'Cormorant Garamond', serif;
     color: white;
     text-align: center;
-    overflow-x: hidden;
     opacity: 0;
-    animation: fadeInPage 1.6s ease forwards;
+    animation: fadeInPage 1.5s ease forwards;
+    position: relative;
 }
 
-/* PAGE FADE IN */
 @keyframes fadeInPage {
     to { opacity: 1; }
 }
 
+/* MAIN */
 .container {
-    padding: 90px 20px;
-    max-width: 950px;
-    margin: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
     position: relative;
     z-index: 2;
 }
 
-/* GOLD SHIMMER HEADING */
+/* HEADING */
 h1 {
-    font-size: 46px;
-    font-weight: 600;
-    margin-bottom: 15px;
+    font-size: 40px;
+    margin-bottom: 8px;
     background: linear-gradient(90deg, #fff, #FFD700, #fff);
     background-size: 200% auto;
     -webkit-background-clip: text;
@@ -52,37 +58,32 @@ h1 {
 }
 
 .subtitle {
-    font-size: 22px;
-    margin-bottom: 60px;
+    font-size: 18px;
+    margin-bottom: 25px;
 }
 
-/* SIDE IMAGES CENTERED */
+/* ROUNDED SIDE IMAGES */
 .side-image {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    width: 320px;
-    max-width: 28vw;
+    width: 240px;
+    max-width: 22vw;
     z-index: 1;
-    animation: float 6s ease-in-out infinite;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
 }
 
-.left-image { left: 0; }
-.right-image { right: 0; }
-
-@keyframes float {
-    0% { transform: translateY(-50%) translateY(0px); }
-    50% { transform: translateY(-50%) translateY(-14px); }
-    100% { transform: translateY(-50%) translateY(0px); }
-}
+.left-image { left: 15px; }
+.right-image { right: 15px; }
 
 /* ENVELOPES */
 .envelopes {
     display: flex;
     justify-content: center;
-    gap: 35px;
+    gap: 18px;
     flex-wrap: wrap;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .envelope-wrapper {
@@ -91,14 +92,14 @@ h1 {
 }
 
 .envelope {
-    width: 200px;
-    height: 120px;
+    width: 150px;
+    height: 90px;
     background: white;
-    border-radius: 10px;
+    border-radius: 8px;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.9s ease;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    transition: transform 0.8s ease;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
 }
 
 .envelope.open {
@@ -109,11 +110,11 @@ h1 {
     position: absolute;
     top: 0;
     width: 100%;
-    height: 60px;
+    height: 45px;
     background: #f9f9f9;
     clip-path: polygon(0 0, 50% 100%, 100% 0);
     transform-origin: top;
-    transition: transform 0.9s ease;
+    transition: transform 0.8s ease;
 }
 
 .envelope.open .flap {
@@ -122,35 +123,57 @@ h1 {
 
 .label {
     position: absolute;
-    bottom: 18px;
+    bottom: 10px;
     width: 100%;
-    text-align: center;
-    font-size: 18px;
+    font-size: 14px;
     color: #EF785B;
-    letter-spacing: 0.5px;
 }
 
 /* MESSAGE */
 .message {
-    margin-top: 28px;
-    font-size: 26px;
+    font-size: 18px;
+    margin: 4px 0;
     opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.8s ease;
+    transition: all 0.6s ease;
 }
 
 .message.show {
     opacity: 1;
-    transform: translateY(0);
 }
 
 .final {
-    margin-top: 55px;
-    font-size: 30px;
+    margin-top: 6px;
+    font-size: 20px;
     display: none;
 }
 
-/* RESPONSIVE */
+/* SPARKLES + FLOATING EMOJIS */
+.sparkle, .floating-emoji {
+    position: fixed;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.sparkle {
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.floating-emoji {
+    font-size: 18px;
+    opacity: 0.08;
+    animation: floatEmoji 12s linear infinite;
+}
+
+@keyframes floatEmoji {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
 @media (max-width: 1000px) {
     .side-image { display: none; }
 }
@@ -164,6 +187,7 @@ h1 {
 <img src="doodle1.png" class="side-image right-image">
 
 <div class="container">
+
     <h1>Celebrating 4 Remarkable Years 🎉❤️</h1>
     <div class="subtitle">Click each note to reveal a message of gratitude 💌✨</div>
 
@@ -212,7 +236,7 @@ h1 {
     </div>
 
     <div id="msg4" class="message">
-        Thank you for being the pillar of strength behind Expedify's growth. 🌸
+        Thank you for being the pillar of strength behind our organization’s growth. 🌸
     </div>
 
     <div id="finalMessage" class="final">
@@ -226,67 +250,72 @@ h1 {
 let opened = 0;
 
 function openEnvelope(wrapper, num) {
-
     const envelope = wrapper.querySelector(".envelope");
     const message = document.getElementById("msg" + num);
 
     if (!envelope.classList.contains("open")) {
-
         envelope.classList.add("open");
-
-        setTimeout(() => {
-            message.classList.add("show");
-        }, 700);
-
+        setTimeout(() => message.classList.add("show"), 400);
         opened++;
         launchConfetti();
 
         if (opened === 4) {
             setTimeout(() => {
                 document.getElementById("finalMessage").style.display = "block";
-            }, 900);
+            }, 600);
         }
     }
 }
 
-/* WHITE + GOLD CONFETTI */
+/* GOLD + WHITE CONFETTI */
 function launchConfetti() {
-
-    const duration = 1400;
-    const end = Date.now() + duration;
-
-    (function frame() {
-
-        const confetti = document.createElement("div");
-
-        confetti.style.position = "fixed";
-        confetti.style.width = "7px";
-        confetti.style.height = "7px";
-        confetti.style.backgroundColor = Math.random() > 0.5 ? "white" : "#FFD700";
+    for (let i = 0; i < 25; i++) {
+        let confetti = document.createElement("div");
+        confetti.className = "sparkle";
+        confetti.style.background = Math.random() > 0.5 ? "#FFD700" : "white";
         confetti.style.left = Math.random() * window.innerWidth + "px";
         confetti.style.top = "-10px";
-        confetti.style.borderRadius = "50%";
-        confetti.style.zIndex = "999";
-
         document.body.appendChild(confetti);
 
         let fall = setInterval(() => {
-            confetti.style.top = parseInt(confetti.style.top) + 7 + "px";
+            confetti.style.top = parseInt(confetti.style.top) + 5 + "px";
             if (parseInt(confetti.style.top) > window.innerHeight) {
                 clearInterval(fall);
                 confetti.remove();
             }
-        }, 18);
+        }, 15);
+    }
+}
 
-        if (Date.now() < end) {
-            requestAnimationFrame(frame);
+/* CONTINUOUS WHITE SPARKLES */
+setInterval(() => {
+    let sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.style.left = Math.random() * window.innerWidth + "px";
+    sparkle.style.top = "-10px";
+    document.body.appendChild(sparkle);
+
+    let fall = setInterval(() => {
+        sparkle.style.top = parseInt(sparkle.style.top) + 2 + "px";
+        if (parseInt(sparkle.style.top) > window.innerHeight) {
+            clearInterval(fall);
+            sparkle.remove();
         }
+    }, 20);
+}, 300);
 
-    })();
+/* SUBTLE FLOATING EMOJIS IN EMPTY AREAS */
+const emojis = ["✨","🎉","💛","🌟"];
+for (let i = 0; i < 8; i++) {
+    let emoji = document.createElement("div");
+    emoji.className = "floating-emoji";
+    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 90 + "vw";
+    emoji.style.top = Math.random() * 90 + "vh";
+    document.body.appendChild(emoji);
 }
 
 </script>
 
 </body>
 </html>
-
